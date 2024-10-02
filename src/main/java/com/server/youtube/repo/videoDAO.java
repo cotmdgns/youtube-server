@@ -1,7 +1,8 @@
 package com.server.youtube.repo;
 
-import com.server.youtube.domian.video;
+import com.server.youtube.domian.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface videoDAO extends JpaRepository<video,Integer> {
+public interface VideoDAO extends JpaRepository<Video,Integer>, QuerydslPredicateExecutor<Video> {
 }

@@ -28,7 +28,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        //클라이언트에서 보낸 토큰을 받아서 사용자 확인 후 인증 처리
+        /*
+        *   Authorization : Bearer fssfjseje34j34jeqaqofd
+        * */
         String token = parseBearerToken(request);
 
         if(token!=null){

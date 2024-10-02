@@ -24,12 +24,15 @@ public class SecurityConfig {
 
     @Autowired
     private OAuth2SucessHandler handler;
-
+    // 백엔드 서버: http://localhost:8080
+    // 클라이언트 서버: http://localhost:3000
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
-                //.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf->csrf.disable())
+                // 요청이 들어왔을떄 어캐할꺼냐
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2.successHandler(handler))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

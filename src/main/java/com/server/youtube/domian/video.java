@@ -1,10 +1,8 @@
 package com.server.youtube.domian;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
@@ -13,10 +11,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Builder
+@DynamicInsert
 // 컨트롤 알트 L (자동정렬)
-public class video {
+public class Video {
     @Id
     @Column(name="video_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int videoCode;
 
     @Column(name="video_url")
