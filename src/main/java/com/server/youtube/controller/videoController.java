@@ -54,7 +54,7 @@ public class VideoController {
 
         // WHERE video_title LIKE CONCAT ('%',keyword,'%')
         // WHERE video_title LIKE '%keyword%'
-        if (keyword !=null) {
+        if (keyword !=null && !keyword.equals("")) {
             //expression 틀이 WHERE video_title 이거
             // 원하는 조건은 필드값과 같이 결합해서 생성
             BooleanExpression expression = qVideo.videoTitle.like("%" + keyword + "%");//eq는 =라는 의미
@@ -65,6 +65,10 @@ public class VideoController {
 
         Page<Video> list = service.viewAll(builder , pageable);
         return ResponseEntity.status(HttpStatus.OK).body(list.getContent());
+    }
+    @GetMapping("/video/{code}")
+    public ResponseEntity view(@PathVariable(name="code") int code){
+        return ResponseEntity.ok(service.view(code));
     }
 
 
