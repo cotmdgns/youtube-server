@@ -33,8 +33,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf->csrf.disable())
                 // 요청이 들어왔을떄 어캐할꺼냐
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-                .oauth2Login(oauth2 -> oauth2.successHandler(handler))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("api/private/*").authenticated()
+                        .anyRequest().permitAll())
+                //.oauth2Login(oauth2 -> oauth2.successHandler(handler))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
