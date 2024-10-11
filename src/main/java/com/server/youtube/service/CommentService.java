@@ -24,6 +24,18 @@ public class CommentService {
     public Comment create(Comment vo){
         return dao.save(vo);
     }
+    // 댓글 수정 하기
+    public void update(Comment vo){
+        Comment comment = dao.findById(vo.getCommentCode()).get();
+        comment.setCommentText(vo.getCommentText());
+        dao.save(comment);
+    }
+    //댓글 삭제 하기
+    public void remove(int commentCode){
+        dao.deleteById(commentCode);
+    }
+
+
 
     // 비디오별 상위 댓글들 보여주기 -> SQL문 짜보기!
     /*
@@ -40,5 +52,17 @@ public class CommentService {
               .orderBy(qComment.commentDate.desc())
               .fetch();
     };
+    
+    // 각 댓글의 하위 댓글들 가져오기
+    // SELECT * FROM comment
+    // WHERE parent_code = 1
+    // ORDER BY comment_date ASC
+    public List<Comment> getReComments(int parentCode){
+        return queryFactory
+                .selectFrom(qComment)
+                .where(qComment.parentCode.eq(parentCode))
+                .orderBy(qComment.commentDate.desc())
+                .fetch();
+    }
 
 }
