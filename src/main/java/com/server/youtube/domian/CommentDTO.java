@@ -20,5 +20,7 @@ public class CommentDTO {
     private LocalDateTime commentDate;
     private String id;
     private int videoCode;
+    private boolean isDelete;
     private List<CommentDTO> replies = new ArrayList<>();
+
 }

@@ -70,7 +70,7 @@ public class CommentController {
                 .commentDate(comment.getCommentDate())
                 .id(comment.getId())
                 .videoCode(comment.getVideoCode())
-//                .replies(repliesDTO)
+                .isDelete(comment.isDelete())
                 .build();
     }
 
