@@ -1,6 +1,6 @@
 package com.server.youtube.config;
 
-import com.server.youtube.domian.Member;
+import com.server.youtube.domain.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,7 +18,7 @@ public class TokenProvider {
 
     private SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    public String create(Member member){
+    public String create(Member member) {
         return Jwts.builder()
                 .signWith(secretKey)
                 .setClaims(Map.of(
@@ -28,9 +28,9 @@ public class TokenProvider {
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.DAYS)))
                 .compact();
-
     }
-    public Member validate(String token){
+
+    public Member validate(String token) {
         Claims claims = Jwts.parser()
                             .setSigningKey(secretKey)
                             .parseClaimsJws(token)
@@ -40,6 +40,4 @@ public class TokenProvider {
                 .email((String) claims.get("email"))
                 .build();
     }
-
-
 }

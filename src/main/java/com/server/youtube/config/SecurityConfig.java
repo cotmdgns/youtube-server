@@ -24,17 +24,17 @@ public class SecurityConfig {
 
     @Autowired
     private OAuth2SucessHandler handler;
-    // 백엔드 서버: http://localhost:8080
-    // 클라이언트 서버: http://localhost:3000
-    
+
+    // 백엔드 서버 : http://localhost:8080
+    // 클라이언트 서버 : http://localhost:3000
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf->csrf.disable())
-                // 요청이 들어왔을떄 어캐할꺼냐
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("api/private/*").authenticated()
+                        .requestMatchers("/api/private/*").authenticated()
                         .anyRequest().permitAll())
                 //.oauth2Login(oauth2 -> oauth2.successHandler(handler))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -42,10 +42,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -58,5 +57,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }

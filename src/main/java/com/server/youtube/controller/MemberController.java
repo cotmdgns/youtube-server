@@ -1,10 +1,9 @@
 package com.server.youtube.controller;
 
 import com.server.youtube.config.TokenProvider;
-import com.server.youtube.domian.Member;
-import com.server.youtube.domian.MemberDTO;
+import com.server.youtube.domain.Member;
+import com.server.youtube.domain.MemberDTO;
 import com.server.youtube.service.MemberService;
-import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/member/*")
-@CrossOrigin(origins = {"*"},maxAge = 6000)
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class MemberController {
 
     @Autowired
@@ -22,15 +21,15 @@ public class MemberController {
     private TokenProvider tokenProvider;
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@RequestBody Member vo){
+    public ResponseEntity signup(@RequestBody Member vo) {
         service.signup(vo);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Member vo){
-        Member member = service.login(vo.getId(),vo.getPassword());
-        if(member!=null){
+    public ResponseEntity login(@RequestBody Member vo) {
+        Member member = service.login(vo.getId(), vo.getPassword());
+        if(member!=null) {
             String token = tokenProvider.create(member);
             return ResponseEntity.ok(MemberDTO.builder()
                                         .id(member.getId())

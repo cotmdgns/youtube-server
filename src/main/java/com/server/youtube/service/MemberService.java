@@ -1,6 +1,6 @@
 package com.server.youtube.service;
 
-import com.server.youtube.domian.Member;
+import com.server.youtube.domain.Member;
 import com.server.youtube.repo.MemberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,17 +16,16 @@ public class MemberService {
     @Autowired
     private PasswordEncoder bcpe;
 
-    public void signup(Member vo){
+    public void signup(Member vo) {
         vo.setPassword(bcpe.encode(vo.getPassword()));
         dao.save(vo);
     }
 
-    public Member login(String id ,String password){
-        Member member = dao.findById(id).orElseThrow(()->new UsernameNotFoundException("Member not Found"));
-        if(bcpe.matches(password, member.getPassword())){
+    public Member login(String id, String password) {
+        Member member = dao.findById(id).orElseThrow(() -> new UsernameNotFoundException("Member Not Found"));
+        if(bcpe.matches(password, member.getPassword())) {
             return member;
         }
         return null;
     }
-
 }
